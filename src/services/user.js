@@ -27,6 +27,25 @@ const getUserInfo = async (userName, password) => {
   return fornatRes;
 };
 
+/**
+ * @description: 创建用户
+ * @param {String} userName 用户名
+ * @param {String} password 密码
+ * @param {Number} gender 性别
+ * @param {String} nickName 昵称
+ */
+const createUser = async ({ userName, password, gender = 3, nickName }) => {
+  const result = await User.create({
+    userName,
+    password,
+    nickName: nickName || userName,
+    gender,
+  });
+
+  return result.dataValues;
+};
+
 module.exports = {
   getUserInfo,
+  createUser,
 };
