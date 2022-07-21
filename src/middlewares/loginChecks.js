@@ -6,15 +6,15 @@ const { loginCheckFailInfo } = require("../model/ErrorInfo");
  * @param {Object} ctx
  * @param {Function} next
  */
-const loginCheck = (ctx, next) => {
+const loginCheck = async (ctx, next) => {
   // 已登录
   if (ctx.session?.userInfo) {
-    await next()
-    return
+    await next();
+    return;
   }
 
   // 未登录
-  ctx.body = new ErrorModel(loginCheckFailInfo)
+  ctx.body = new ErrorModel(loginCheckFailInfo);
 };
 
 /**
@@ -22,16 +22,16 @@ const loginCheck = (ctx, next) => {
  * @param {Object} ctx
  * @param {Function} next
  */
-const loginRedirect = (ctx, next) => {
+const loginRedirect = async (ctx, next) => {
   // 已登录
   if (ctx.session?.userInfo) {
-    await next()
-    return
+    await next();
+    return;
   }
 
   // 未登录
-  const curUrl = ctx.url
-  ctx.redirect(`/login?url=${encodeURIComponent(curUrl)}`)
+  const curUrl = ctx.url;
+  ctx.redirect(`/login?url=${encodeURIComponent(curUrl)}`);
 };
 
 module.exports = {
