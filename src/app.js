@@ -1,5 +1,7 @@
+const path = require("path");
 const Koa = require("koa");
 const app = new Koa();
+const koaStatic = require("koa-static");
 const views = require("koa-views");
 const json = require("koa-json");
 const onerror = require("koa-onerror");
@@ -14,6 +16,7 @@ const { SESSION_SECRET_KEY } = require("./conf/secretKeys");
 
 // 路由
 const index = require("./routes/index");
+const utilsApiRouter = require("./routes/api/utils");
 const userViewRouter = require("./routes/view/user");
 const userApiRouter = require("./routes/api/user");
 const errorViewRouter = require("./routes/view/error");
@@ -35,7 +38,8 @@ app.use(
 );
 app.use(json());
 app.use(logger());
-app.use(require("koa-static")(__dirname + "/public"));
+app.use(koaStatic(__dirname + "/public"));
+app.use(koaStatic(path.join(__dirname, "..", "uploadFiles")));
 
 app.use(
   views(__dirname + "/views", {
@@ -62,6 +66,7 @@ app.use(
 
 // routes
 app.use(index.routes(), index.allowedMethods());
+app.use(utilsApiRouter.routes(), utilsApiRouter.allowedMethods());
 app.use(userApiRouter.routes(), userApiRouter.allowedMethods());
 app.use(userViewRouter.routes(), userViewRouter.allowedMethods());
 app.use(errorViewRouter.routes(), errorViewRouter.allowedMethods());
