@@ -15,6 +15,7 @@ const { isProd } = require("./utils/env");
 const { SESSION_SECRET_KEY } = require("./conf/secretKeys");
 
 // 路由
+const blogHomeApiRouter = require("./routes/api/blog-home");
 const blogViewRouter = require("./routes/view/blog");
 const utilsApiRouter = require("./routes/api/utils");
 const userViewRouter = require("./routes/view/user");
@@ -65,6 +66,7 @@ app.use(
 );
 
 // routes
+app.use(blogHomeApiRouter.routes(), blogHomeApiRouter.allowedMethods());
 app.use(blogViewRouter.routes(), blogViewRouter.allowedMethods());
 app.use(utilsApiRouter.routes(), utilsApiRouter.allowedMethods());
 app.use(userApiRouter.routes(), userApiRouter.allowedMethods());
