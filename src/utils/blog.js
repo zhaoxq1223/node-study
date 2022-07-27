@@ -12,12 +12,12 @@ const BLOG_LIST_TPL = fs
  * @param {Array} blogList 微博列表
  * @param {boolean} canReply 是否可以回复
  */
-function getBlogListStr(blogList = [], canReply = false) {
+const getBlogListStr = (blogList = [], canReply = false) => {
   return ejs.render(BLOG_LIST_TPL, {
     blogList,
     canReply,
   });
-}
+};
 
 module.exports = {
   getBlogListStr,
