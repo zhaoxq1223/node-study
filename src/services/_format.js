@@ -1,4 +1,5 @@
 const { DEFAULT_PICTURE } = require("../conf/constant");
+const { timeFormat } = require("../utils/dt");
 
 /**
  * @description:用户默认头像
@@ -27,6 +28,33 @@ const formatUser = (list) => {
   return _formatUserPicture(list);
 };
 
+/**
+ * @description: 格式化数据时间
+ * @param {Object} obj
+ */
+const _formatDBTime = (obj) => {
+  obj.createdAtFormat = timeFormat(obj.createdAt);
+  obj.updatedAtFormat = timeFormat(obj.updatedAt);
+  return obj;
+};
+
+/**
+ * @description: 格式化微博信息
+ * @param {Array|Object} list 微博列表或者单个微博对象
+ * @return {Array|Object}
+ */
+const formatBlog = (list) => {
+  if (list == null) {
+    return list;
+  }
+  if (list instanceof Array) {
+    return list.map(_formatDBTime);
+  }
+
+  return _formatDBTime(list);
+};
+
 module.exports = {
   formatUser,
+  formatBlog,
 };
