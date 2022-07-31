@@ -1,3 +1,4 @@
+const Sequelize = require("sequelize");
 const { User, UserRelation } = require("../db/model/index");
 const { formatUser } = require("./_format");
 
@@ -15,6 +16,9 @@ const getUserByFollower = async (followerId) => {
         model: UserRelation,
         where: {
           followerId,
+          userId: {
+            [Sequelize.Op.ne]: followerId,
+          },
         },
       },
     ],
@@ -45,6 +49,9 @@ const getFollowersByUser = async (userId) => {
     ],
     where: {
       userId,
+      followerId: {
+        [Sequelize.Op.ne]: userId,
+      },
     },
   });
 
